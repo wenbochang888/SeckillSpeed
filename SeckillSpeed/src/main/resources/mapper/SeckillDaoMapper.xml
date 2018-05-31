@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.seckill.SeckillDao">
+  
+    <select id="getSeckillById" resultType="com.seckill.Seckill">
+  	  select seckill_id, name, number, start_time, end_time, create_time
+			from seckill where seckill_id = #{id}
+    </select>
+  
+    <update id="reduceNumber">
+	  update seckill set number = number - 1
+	  where seckill_id = #{id} and number > 0
+    </update>
+    
+    <insert id="insertSuccessKilled">
+		insert ignore into success_killed(seckill_id, user_phone, state)
+			values(#{id}, #{phone}, 0)
+	</insert>
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
