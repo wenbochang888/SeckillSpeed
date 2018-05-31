@@ -28,6 +28,8 @@ jdk1.8 + eclipse + window8.1
 
 ## 高并发优化思路（Important）
 
+![Image text](https://github.com/wenbochang888/SeckillSpeed/blob/master/src/sum.png)
+
 1：首先先将商品的信息以及商品的数量加载到Redis缓存里面去
 
 2：当Nginx收到请求，Nginx做一个负载均衡进行转发。这里是根据ip_hash进行转发，后台可以建立一个tomcat集群，因为我这边服务器有限，就一台服务器，看不出效果。
@@ -49,3 +51,5 @@ ps. 序列化和反序列的时候用到了第三方的框架protostuff，这个
 ## 再次说明
 
 这个只有一个秒杀接口，非整个秒杀项目。但麻雀虽小五脏俱全。
+
+
