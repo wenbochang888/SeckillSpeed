@@ -45,6 +45,29 @@ jdk1.8 + eclipse + window8.1
 	}
 
 4：当请求进行到了下一步。立刻入队，然后立刻返回给用户排队中，请等待。然后后台异步处理用户请求。改请求包括两个步骤，减库存，插入秒杀成功记录。
+	
+	//入队
+	sender.send(id);
+
+	//出队
+	@RabbitHandler
+	public void receive(String id) throws JsonParseException, JsonMappingException, IOException {
+		
+		System.out.println("消费者收到了一个消息: " + id + "  " + new Date().getTime());
+		executeSmallByRabbit(id);
+	}
+	
+	@Transactional
+	public boolean executeSmallByRabbit(String id) throws RuntimeException {
+		
+		int state = exe.reduceNumber(id);
+		if (state <= 0) {
+			throw new RuntimeException("库存不足");
+		}
+		String x = String.valueOf(System.nanoTime()).substring(5);
+		exe.insertSuccessKilled(id,  x + new Random().nextInt(1000));
+		return true;
+	}
 			
 ps. 序列化和反序列的时候用到了第三方的框架protostuff，这个序列化更快而且数据大小可以达到原来的1/5 - 1/10左右
 
