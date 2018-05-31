@@ -16,7 +16,7 @@
 
 ## 项目使用技术
 
-项目使用了SpringBoot + Nginx + RabbitMQ + Redis + MySql + Protostuff技术
+项目使用了SpringBoot + Nginx + RabbitMQ + Redis集群 + MySql + Protostuff技术
 
 ## 项目坏境
 
@@ -34,7 +34,7 @@ jdk1.8 + eclipse + window8.1
 
 2：当Nginx收到请求，Nginx做一个负载均衡进行转发。这里是根据ip_hash进行转发，后台可以建立一个tomcat集群，因为我这边服务器有限，就一台服务器，看不出效果。
 
-3：当tomcat服务器收到请求，先去Redis里面预减少库存，做一个判断，这操作可以拦截99%的无效流量，达到高并发的目的。逻辑如下：
+3：当tomcat服务器收到请求，先去Redis里面预减少库存，做一个判断，这操作可以拦截99%的无效流量，达到高并发的目的。因为Redis要拦截大多数的无效请求，所以我这里搞了一个Redis集群，六个节点，三主三从。<a href = "https://www.cnblogs.com/wenbochang/p/9060122.html" target="_blank">Redis集群搭建</a>。该步骤逻辑大致如下：
 
 	num = stringRedis.opsForValue().increment(stock + id, -1);
 	if (num < 0) {
