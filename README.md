@@ -28,7 +28,7 @@ jdk1.8 + eclipse + window8.1
 
 ## 高并发优化思路（Important）
 
-![Image text](https://github.com/wenbochang888/SeckillSpeed/blob/master/src/sum.png)
+![Image text](https://github.com/wenbochang888/SeckillSpeed/blob/master/img/sum.png)
 
 1：首先先将商品的信息以及商品的数量加载到Redis缓存里面去
 
